@@ -4,7 +4,7 @@ import java.io.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
-@WebServlet(name = "FilmChooser", value = "/films")
+@WebServlet(name = "FilmChooser", value = "/")
 public class FilmChooser extends HttpServlet{
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // Set the response content type to HTML
@@ -27,6 +27,7 @@ public class FilmChooser extends HttpServlet{
             }
         }
     }
+
     public void processRequest  (HttpServletRequest request, HttpServletResponse response) throws IOException {
         String title = request.getParameter("title");
         String scenarist = request.getParameter("scenarist");
@@ -39,7 +40,9 @@ public class FilmChooser extends HttpServlet{
         out.println("<p>Scenarist: " + scenarist + "</p>");
         out.println("<p>Min Duration: " + duration + " minutes</p>");
         out.println("<p>Rating: " + rating + "</p>");
+
     }
+
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         processRequest(request, response);
     }
