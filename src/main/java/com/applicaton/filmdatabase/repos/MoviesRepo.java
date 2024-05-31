@@ -14,10 +14,24 @@ public class MoviesRepo {
     private MoviesRepo() {
     }
 
-    public static List<Movie> getMovies()  {
+    public static List<Movie> getMovies(String title, String scenarist, int minDuration, int maxDuration, int rating)  {
+            StringBuilder query = new StringBuilder(GET_MOVIES);
+
+            query.append(" WHERE watch_time BETWEEN ").append(minDuration).append(" AND ").append(maxDuration);
+
+            // Add conditions for title and scenarist if they are not null
+            if (title != null && !title.isEmpty()) {
+                query.append(" AND name LIKE '%").append(title).append("%'");
+            }
+//            if (scenarist != null && !scenarist.isEmpty()) {
+//                query.append(" AND scenarist LIKE ?");
+//            }
+            if (rating > 0) {
+                query.append(" AND rating >= ").append(rating);
+            }
         try (Connection connection = ConnectionManager.open();
              var statement = connection.createStatement();
-             var resultSet = statement.executeQuery(GET_MOVIES);){
+             var resultSet = statement.executeQuery(query.toString())){
             List<Movie> movies = new ArrayList<>();
             while(resultSet.next()) {
                 movies.add(new Movie(

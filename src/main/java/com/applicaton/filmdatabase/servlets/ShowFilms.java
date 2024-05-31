@@ -21,7 +21,16 @@ public class ShowFilms extends HttpServlet {
         req.getParameterMap();
         resp.setContentType("text/html");
         PrintWriter writer = resp.getWriter();
-        List<Movie> movies = MoviesRepo.getMovies();
+
+        String title = req.getParameter("title");
+        String scenarist = req.getParameter("scenarist");
+        int minDuration = Integer.parseInt(req.getParameter("minDuration"));
+        int maxDuration = Integer.parseInt(req.getParameter("maxDuration"));
+        String ratingStr = req.getParameter("rating");
+
+        int rating = ratingStr == null || ratingStr.isEmpty() ? 0 : Integer.parseInt(ratingStr);
+
+        List<Movie> movies = MoviesRepo.getMovies(title, scenarist, minDuration, maxDuration, rating);
         writer.println("<html><body>");
         writer.println("<h1>Films</h1>");
         writer.println("<table border='1'>");
