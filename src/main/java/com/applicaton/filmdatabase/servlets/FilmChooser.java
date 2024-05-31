@@ -12,4 +12,30 @@ public class FilmChooser extends HttpServlet{
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.getRequestDispatcher("/WEB-INF/FilmChooser.jsp").forward(request, response);
     }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String title = request.getParameter("title");
+        String scenarist = request.getParameter("scenarist");
+        int minDuration = Integer.parseInt(request.getParameter("minDuration"));
+        int maxDuration = Integer.parseInt(request.getParameter("maxDuration"));
+        int rating = Integer.parseInt(request.getParameter("minRating"));
+        String redirectURL = "/films?";
+        if (minDuration > maxDuration) {
+            request.setAttribute("errorMessage", "You entered invalid duration range. Please try again.");
+            request.getRequestDispatcher("/WEB-INF/FilmChooser.jsp").forward(request, response);
+        }else {
+            redirectURL += "minDuration=" + minDuration + "&maxDuration=" + maxDuration;
+        }
+        if (title != null && !title.isEmpty()) {
+            redirectURL += "&title=" + title;
+        }
+        if (scenarist != null && !scenarist.isEmpty()) {
+            redirectURL += "&scenarist=" + scenarist;
+        }
+        if (rating > 0) {
+            redirectURL += "&rating=" + rating;
+        }
+        System.out.println(redirectURL);
+        response.sendRedirect(redirectURL);
+    }
 }
