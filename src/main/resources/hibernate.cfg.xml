@@ -8,7 +8,10 @@
     <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
     <property name="connection.username">root</property>
     <property name="connection.password"> my-secret-pw </property>
-
+    <mapping class="com.application.filmdatabase.models.Film"/>
+    <mapping class="com.application.filmdatabase.models.Actor"/>
+    <mapping class="com.application.filmdatabase.models.Director"/>
+    <mapping class="com.application.filmdatabase.models.Genre"/>
 
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
