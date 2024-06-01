@@ -36,7 +36,7 @@ public class Film {
     @Builder.Default
     private List<Genre> genres = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "Film_Actors",
             joinColumns = @JoinColumn(name = "FilmID"),
@@ -45,7 +45,7 @@ public class Film {
     @Builder.Default
     private List<Actor> actors = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "Film_Directors",
             joinColumns = @JoinColumn(name = "FilmID"),
