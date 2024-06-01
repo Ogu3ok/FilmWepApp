@@ -7,25 +7,51 @@ import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class FilmsRepo {
 
     private FilmsRepo() {
     }
 
-    public static List<Film> getFilms(String title,  int minDuration, int maxDuration, int rating)  {
+    public static List<Film> getFilms(Map<String, String[]> params, int page) {
         List<Film> films = new ArrayList<>();
         Configuration configuration = new Configuration();
         configuration.configure();
-
+        StringBuilder buildQuery = new StringBuilder("Select f from Film f join directors d");
+        if (!params.isEmpty()) {
+            buildQuery.append(" where ");
+        }
+        var iterator = params.entrySet().iterator();
+        while(iterator.hasNext()){
+            var entry = iterator.next();
+            String key = entry.getKey();
+            String value = entry.getValue()[0];
+            System.out.println(key + " : " + value);
+            if (key.equals("title")) {
+                buildQuery.append("f.title like '%").append(value).append("%'");
+            } else if (key.equals("director")) {
+                buildQuery.append("d.name like '%").append(value).append("%'");
+            } else if (key.equals("minDuration")) {
+                buildQuery.append("f.runtime >= ").append(value);
+            } else if (key.equals("maxDuration")) {
+                buildQuery.append("f.runtime <= ").append(value);
+            } else if (key.equals("rating")) {
+                buildQuery.append("f.imdbRating >= ").append(value);
+            }
+            if (iterator.hasNext()) {
+                buildQuery.append(" and ");
+            }
+        }
+        System.out.println(buildQuery);
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
-                var session = sessionFactory.openSession()) {
-                films = session.createQuery("FROM Film WHERE title LIKE :title AND runtime BETWEEN :minDuration AND :maxDuration AND imdbRating >= :rating", Film.class)
-                        .setParameter("title", "%" + title + "%")
-                        .setParameter("minDuration", minDuration)
-                        .setParameter("maxDuration", maxDuration)
-                        .setParameter("rating", rating)
-                        .getResultList();
+             var session = sessionFactory.openSession()) {
+
+            films = session.createQuery(buildQuery.toString(), Film.class)
+                    .setFirstResult(page * 15)
+                    .setMaxResults(15)
+                    .getResultList();
+            System.out.println("Films got from db: "+films.size());
         } catch (Exception e) {
             e.printStackTrace();
         }

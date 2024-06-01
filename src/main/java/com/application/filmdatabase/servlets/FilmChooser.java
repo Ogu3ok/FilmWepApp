@@ -23,11 +23,16 @@ public class FilmChooser extends HttpServlet{
         if (minDuration > maxDuration) {
             request.setAttribute("errorMessage", "You entered invalid duration range. Please try again.");
             request.getRequestDispatcher("/WEB-INF/FilmChooser.jsp").forward(request, response);
-        }else {
-            redirectURL += "minDuration=" + minDuration + "&maxDuration=" + maxDuration;
         }
+        if (minDuration > 30)
+            redirectURL += "minDuration=" + minDuration;
+        if (maxDuration < 330)
+            redirectURL += "&maxDuration=" + maxDuration;
         if (title != null && !title.isEmpty()) {
             redirectURL += "&title=" + title;
+        }
+        if(director != null && !director.isEmpty()) {
+            redirectURL += "&director=" + director;
         }
         if (director != null && !director.isEmpty()) {
             redirectURL += "&director=" + director;

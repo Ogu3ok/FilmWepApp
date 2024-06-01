@@ -22,9 +22,9 @@
             <p>Duration:</p>
             <div>
                 <label for="minDuration">Min:</label>
-                <input type="number" id="minDuration" name="minDuration" min="30" max="240" value="30">
+                <input type="number" id="minDuration" name="minDuration" min="30" max="330" value="30">
                 <label for="maxDuration">Max:</label>
-                <input type="number" id="maxDuration" name="maxDuration" min="30" max="240" value="240">
+                <input type="number" id="maxDuration" name="maxDuration" min="30" max="330" value="330">
             </div>
         </div>
         <div class="number-field">
