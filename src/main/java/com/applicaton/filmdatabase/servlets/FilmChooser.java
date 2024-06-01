@@ -15,7 +15,7 @@ public class FilmChooser extends HttpServlet{
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String title = request.getParameter("title");
-        String scenarist = request.getParameter("scenarist");
+        String director = request.getParameter("director");
         int minDuration = Integer.parseInt(request.getParameter("minDuration"));
         int maxDuration = Integer.parseInt(request.getParameter("maxDuration"));
         int rating = Integer.parseInt(request.getParameter("minRating"));
@@ -29,8 +29,8 @@ public class FilmChooser extends HttpServlet{
         if (title != null && !title.isEmpty()) {
             redirectURL += "&title=" + title;
         }
-        if (scenarist != null && !scenarist.isEmpty()) {
-            redirectURL += "&scenarist=" + scenarist;
+        if (director != null && !director.isEmpty()) {
+            redirectURL += "&director=" + director;
         }
         if (rating > 0) {
             redirectURL += "&rating=" + rating;

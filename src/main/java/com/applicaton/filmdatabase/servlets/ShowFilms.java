@@ -1,8 +1,8 @@
 package com.applicaton.filmdatabase.servlets;
 
 
-import com.applicaton.filmdatabase.models.Movie;
-import com.applicaton.filmdatabase.repos.MoviesRepo;
+import com.applicaton.filmdatabase.models.Film;
+import com.applicaton.filmdatabase.repos.FilmsRepo;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,24 +23,23 @@ public class ShowFilms extends HttpServlet {
         PrintWriter writer = resp.getWriter();
 
         String title = req.getParameter("title");
-        String scenarist = req.getParameter("scenarist");
         int minDuration = Integer.parseInt(req.getParameter("minDuration"));
         int maxDuration = Integer.parseInt(req.getParameter("maxDuration"));
         String ratingStr = req.getParameter("rating");
 
         int rating = ratingStr == null || ratingStr.isEmpty() ? 0 : Integer.parseInt(ratingStr);
 
-        List<Movie> movies = MoviesRepo.getMovies(title, scenarist, minDuration, maxDuration, rating);
+        List<Film> movies = FilmsRepo.getFilms(title,  minDuration, maxDuration, rating);
         writer.println("<html><body>");
         writer.println("<h1>Films</h1>");
         writer.println("<table border='1'>");
         writer.println("<tr><th>Title</th><th>Year of release</th><th>Duration</th><th>Rating</th></tr>");
-        for (Movie movie : movies) {
+        for (Film movie : movies) {
             writer.println("<tr>");
-            writer.println("<td>" + movie.getName() + "</td>");
-            writer.println("<td>" + movie.getYear_of_release() + "</td>");
-            writer.println("<td>" + movie.getWatch_time() + "</td>");
-            writer.println("<td>" + movie.getRating() + "</td>");
+            writer.println("<td>" + movie.getTitle() + "</td>");
+            writer.println("<td>" + movie.getYear() + "</td>");
+            writer.println("<td>" + movie.getRuntime() + "</td>");
+            writer.println("<td>" + movie.getImdbRating() + "</td>");
             writer.println("</tr>");
         }
         writer.println("</table>");

@@ -15,8 +15,8 @@
             <input type="text" id="title" name="title">
         </div>
         <div class="form-field">
-            <label for="scenarist">Scenarist:</label>
-            <input type="text" id="scenarist" name="scenarist">
+            <label for="director">Director:</label>
+            <input type="text" id="director" name="director">
         </div>
         <div class="slider-container">
             <p>Duration:</p>
