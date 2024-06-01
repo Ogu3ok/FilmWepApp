@@ -1,4 +1,4 @@
-package com.applicaton.filmdatabase.models;
+package com.application.filmdatabase.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -9,7 +9,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -22,6 +23,7 @@ public class Genre {
     private int genreID;
     private String name;
 
-    @ManyToMany(mappedBy = "actors")
-    private Set<Film> films;
+    @Builder.Default
+    @ManyToMany(mappedBy = "genres")
+    private List<Film> films = new ArrayList<>();
 }

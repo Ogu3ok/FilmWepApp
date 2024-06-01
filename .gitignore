@@ -205,3 +205,4 @@ mvnw
 mvnw.cmd
 pom.xml
 /src/main/webapp/WEB-INF/web.xml
+/resources/hibernate.cfg.xml

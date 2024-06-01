@@ -1,8 +1,8 @@
-package com.applicaton.filmdatabase.servlets;
+package com.application.filmdatabase.servlets;
 
 
-import com.applicaton.filmdatabase.models.Film;
-import com.applicaton.filmdatabase.repos.FilmsRepo;
+import com.application.filmdatabase.models.Film;
+import com.application.filmdatabase.repos.FilmsRepo;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -29,17 +29,17 @@ public class ShowFilms extends HttpServlet {
 
         int rating = ratingStr == null || ratingStr.isEmpty() ? 0 : Integer.parseInt(ratingStr);
 
-        List<Film> movies = FilmsRepo.getFilms(title,  minDuration, maxDuration, rating);
+        List<Film> films = FilmsRepo.getFilms(title,  minDuration, maxDuration, rating);
         writer.println("<html><body>");
         writer.println("<h1>Films</h1>");
         writer.println("<table border='1'>");
         writer.println("<tr><th>Title</th><th>Year of release</th><th>Duration</th><th>Rating</th></tr>");
-        for (Film movie : movies) {
+        for (Film film : films) {
             writer.println("<tr>");
-            writer.println("<td>" + movie.getTitle() + "</td>");
-            writer.println("<td>" + movie.getYear() + "</td>");
-            writer.println("<td>" + movie.getRuntime() + "</td>");
-            writer.println("<td>" + movie.getImdbRating() + "</td>");
+            writer.println("<td>" + film.getTitle() + "</td>");
+            writer.println("<td>" + film.getYear() + "</td>");
+            writer.println("<td>" + film.getRuntime() + "</td>");
+            writer.println("<td>" + film.getImdbRating() + "</td>");
             writer.println("</tr>");
         }
         writer.println("</table>");

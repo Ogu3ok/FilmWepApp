@@ -1,4 +1,4 @@
-package com.applicaton.filmdatabase.servlets;
+package com.application.filmdatabase.servlets;
 
 import java.io.*;
 

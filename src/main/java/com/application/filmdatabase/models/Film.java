@@ -1,4 +1,4 @@
-package com.applicaton.filmdatabase.models;
+package com.application.filmdatabase.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -21,7 +22,9 @@ public class Film {
     private int year;
     private int runtime;
     private String poster;
+    @Column(name = "IMDB_Rating")
     private float imdbRating;
+    @Column(name = "IMDB_ID")
     private String imdbID;
 
     @ManyToMany
@@ -30,7 +33,8 @@ public class Film {
             joinColumns = @JoinColumn(name = "FilmID"),
             inverseJoinColumns = @JoinColumn(name = "GenreID")
     )
-    private Set<Genre> genres;
+    @Builder.Default
+    private List<Genre> genres = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -38,7 +42,8 @@ public class Film {
             joinColumns = @JoinColumn(name = "FilmID"),
             inverseJoinColumns = @JoinColumn(name = "ActorID")
     )
-    private Set<Actor> actors;
+    @Builder.Default
+    private List<Actor> actors = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -46,5 +51,6 @@ public class Film {
             joinColumns = @JoinColumn(name = "FilmID"),
             inverseJoinColumns = @JoinColumn(name = "DirectorID")
     )
-    private Set<Director> directors;
+    @Builder.Default
+    private List<Director> directors = new ArrayList<>();
 }
