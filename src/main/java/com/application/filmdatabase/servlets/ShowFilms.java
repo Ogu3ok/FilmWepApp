@@ -169,7 +169,7 @@ public class ShowFilms extends HttpServlet {
             writer.println("        <p>" + (film.getActors().isEmpty() ? "N/A" : film.getActors().stream().map(Actor::getName).collect(Collectors.joining(", "))) + "</p>");
             writer.println("    </div>");
             writer.println("    <div class='film-link'>");
-            writer.println("        <a href='https://example.com' class=\"button\">More Info</a>"); // Replace 'https://example.com' with the actual link
+            writer.println("        <a href='https://www.imdb.com/title/"+film.getImdbID()+"' class=\"button\">Open IMDB page</a>");
             writer.println("    </div>");
             writer.println("</div>");
             writer.println("</td>");
