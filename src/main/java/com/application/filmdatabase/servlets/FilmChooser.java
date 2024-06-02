@@ -1,6 +1,7 @@
 package com.application.filmdatabase.servlets;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.List;
 
 import com.application.filmdatabase.repos.GenresRepo;
@@ -23,28 +24,34 @@ public class FilmChooser extends HttpServlet{
         int minDuration = Integer.parseInt(request.getParameter("minDuration"));
         int maxDuration = Integer.parseInt(request.getParameter("maxDuration"));
         int rating = Integer.parseInt(request.getParameter("minRating"));
-        String redirectURL = "/films?";
+        String[] genres = request.getParameterValues("genres");
+        StringBuilder redirectURL = new StringBuilder("/films?");
         if (minDuration > maxDuration) {
             request.setAttribute("errorMessage", "You entered invalid duration range. Please try again.");
             request.getRequestDispatcher("/WEB-INF/FilmChooser.jsp").forward(request, response);
         }
         if (minDuration > 30)
-            redirectURL += "minDuration=" + minDuration;
+            redirectURL.append("minDuration=").append(minDuration);
         if (maxDuration < 330)
-            redirectURL += "&maxDuration=" + maxDuration;
+            redirectURL.append("&maxDuration=").append(maxDuration);
         if (title != null && !title.isEmpty()) {
-            redirectURL += "&title=" + title;
+            redirectURL.append("&title=").append(title);
         }
         if(director != null && !director.isEmpty()) {
-            redirectURL += "&director=" + director;
+            redirectURL.append("&director=").append(director);
         }
         if (director != null && !director.isEmpty()) {
-            redirectURL += "&director=" + director;
+            redirectURL.append("&director=").append(director);
         }
         if (rating > 0) {
-            redirectURL += "&rating=" + rating;
+            redirectURL.append("&rating=").append(rating);
+        }
+        if(genres != null) {
+            for (String genre : genres) {
+                redirectURL.append("&genre=").append(genre);
+            }
         }
         System.out.println(redirectURL);
-        response.sendRedirect(redirectURL);
+        response.sendRedirect(redirectURL.toString());
     }
 }

@@ -18,7 +18,7 @@ public class FilmsRepo {
         List<Film> films = new ArrayList<>();
         Configuration configuration = new Configuration();
         configuration.configure();
-        StringBuilder buildQuery = new StringBuilder("Select f from Film f join directors d");
+        StringBuilder buildQuery = new StringBuilder("Select f from Film f join f.directors d");
         if (!params.isEmpty()) {
             buildQuery.append(" where ");
         }
@@ -26,14 +26,22 @@ public class FilmsRepo {
         while(iterator.hasNext()){
             var entry = iterator.next();
             String key = entry.getKey();
-            String value = entry.getValue()[0];
+            String[] value = entry.getValue();
             System.out.println(key + " : " + value);
             switch (key) {
-                case "title" -> buildQuery.append("f.title like '%").append(value).append("%'");
-                case "director" -> buildQuery.append("d.name like '%").append(value).append("%'");
-                case "minDuration" -> buildQuery.append("f.runtime >= ").append(value);
-                case "maxDuration" -> buildQuery.append("f.runtime <= ").append(value);
-                case "rating" -> buildQuery.append("f.imdbRating >= ").append(value);
+                case "title" -> buildQuery.append("f.title like '%").append(value[0]).append("%'");
+                case "director" -> buildQuery.append("d.name like '%").append(value[0]).append("%'");
+                case "minDuration" -> buildQuery.append("f.runtime >= ").append(value[0]);
+                case "maxDuration" -> buildQuery.append("f.runtime <= ").append(value[0]);
+                case "rating" -> buildQuery.append("f.imdbRating >= ").append(value[0]);
+                case "genre" ->{
+                    for (int i = 0; i < value.length; i++) {
+                        buildQuery.append("exists (select g from f.genres g where g.name = '").append(value[i]).append("')");
+                        if (i != value.length - 1) {
+                            buildQuery.append(" and ");
+                        }
+                    }
+                }
             }
             if (iterator.hasNext()) {
                 buildQuery.append(" and ");

@@ -33,7 +33,13 @@ public class ShowFilms extends HttpServlet {
         StringBuilder url = new StringBuilder(req.getRequestURI() + "?");
         if (!params.isEmpty()) {
             for (String key : params.keySet()) {
-                url.append("&").append(key).append("=").append(params.get(key)[0]);
+                if (!key.equals("genre")) {
+                    url.append("&").append(key).append("=").append(params.get(key)[0]);
+                } else {
+                    for (String genre : params.get(key)) {
+                        url.append("&").append(key).append("=").append(genre);
+                    }
+                }
             }
         }
 
