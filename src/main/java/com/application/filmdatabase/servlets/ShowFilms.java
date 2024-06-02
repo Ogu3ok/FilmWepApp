@@ -44,7 +44,6 @@ public class ShowFilms extends HttpServlet {
         }
 
         List<Film> films = FilmsRepo.getFilms(params, page - 1);
-        System.out.println("Films got: " + films.size());
         resp.setContentType("text/html");
         PrintWriter writer = resp.getWriter();
         writer.println("<!DOCTYPE html>");

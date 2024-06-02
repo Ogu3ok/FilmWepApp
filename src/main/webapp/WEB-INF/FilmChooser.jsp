@@ -75,7 +75,13 @@
         modal.style.display = "none";
         setTimeout(function () {
             window.location.href = "${pageContext.request.contextPath}/chooser";
-        }, 3000); // Redirect after 3 seconds
+        }, 5000); // Redirect after 3 seconds
+    }
+
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
     }
 </script>
 <% } %>

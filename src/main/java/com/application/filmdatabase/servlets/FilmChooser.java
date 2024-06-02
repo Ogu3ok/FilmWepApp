@@ -13,6 +13,12 @@ import jakarta.servlet.annotation.*;
 public class FilmChooser extends HttpServlet{
     private static final long serialVersionUID = 1L;
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        HttpSession session = request.getSession();
+        String errorMessage = (String) session.getAttribute("errorMessage");
+        if (errorMessage != null) {
+            request.setAttribute("errorMessage", errorMessage);
+            session.removeAttribute("errorMessage");
+        }
         List<String> genres = GenresRepo.getGenres();
         request.setAttribute("genres", genres);
         request.getRequestDispatcher("/WEB-INF/FilmChooser.jsp").forward(request, response);
@@ -27,8 +33,21 @@ public class FilmChooser extends HttpServlet{
         String[] genres = request.getParameterValues("genres");
         StringBuilder redirectURL = new StringBuilder("/films?");
         if (minDuration > maxDuration) {
-            request.setAttribute("errorMessage", "You entered invalid duration range. Please try again.");
-            request.getRequestDispatcher("/WEB-INF/FilmChooser.jsp").forward(request, response);
+            HttpSession session = request.getSession();
+            session.setAttribute("errorMessage", "You entered invalid duration range. Please try again.");
+            response.sendRedirect("/chooser");
+            return;
+        }
+        if(genres != null) {
+            if(genres.length > 3){
+                HttpSession session = request.getSession();
+                session.setAttribute("errorMessage", "You can choose up to 3 genres. Please try again.");
+                response.sendRedirect("/chooser");
+                return;
+            }
+            for (String genre : genres) {
+                redirectURL.append("&genre=").append(genre);
+            }
         }
         if (minDuration > 30)
             redirectURL.append("minDuration=").append(minDuration);
@@ -46,12 +65,6 @@ public class FilmChooser extends HttpServlet{
         if (rating > 0) {
             redirectURL.append("&rating=").append(rating);
         }
-        if(genres != null) {
-            for (String genre : genres) {
-                redirectURL.append("&genre=").append(genre);
-            }
-        }
-        System.out.println(redirectURL);
         response.sendRedirect(redirectURL.toString());
     }
 }

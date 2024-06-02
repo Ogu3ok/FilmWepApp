@@ -27,7 +27,6 @@ public class FilmsRepo {
             var entry = iterator.next();
             String key = entry.getKey();
             String[] value = entry.getValue();
-            System.out.println(key + " : " + value);
             switch (key) {
                 case "title" -> buildQuery.append("f.title like '%").append(value[0]).append("%'");
                 case "director" -> buildQuery.append("d.name like '%").append(value[0]).append("%'");
@@ -47,7 +46,6 @@ public class FilmsRepo {
                 buildQuery.append(" and ");
             }
         }
-        System.out.println(buildQuery);
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              var session = sessionFactory.openSession()) {
 
@@ -55,7 +53,6 @@ public class FilmsRepo {
                     .setFirstResult(page * 15)
                     .setMaxResults(15)
                     .getResultList();
-            System.out.println("Films got from db: "+films.size());
         } catch (Exception e) {
             e.printStackTrace();
         }
