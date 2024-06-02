@@ -1,7 +1,9 @@
 package com.application.filmdatabase.servlets;
 
 import java.io.*;
+import java.util.List;
 
+import com.application.filmdatabase.repos.GenresRepo;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -10,6 +12,8 @@ import jakarta.servlet.annotation.*;
 public class FilmChooser extends HttpServlet{
     private static final long serialVersionUID = 1L;
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        List<String> genres = GenresRepo.getGenres();
+        request.setAttribute("genres", genres);
         request.getRequestDispatcher("/WEB-INF/FilmChooser.jsp").forward(request, response);
     }
 

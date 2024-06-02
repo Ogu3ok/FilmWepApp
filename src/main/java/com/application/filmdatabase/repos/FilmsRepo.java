@@ -28,16 +28,12 @@ public class FilmsRepo {
             String key = entry.getKey();
             String value = entry.getValue()[0];
             System.out.println(key + " : " + value);
-            if (key.equals("title")) {
-                buildQuery.append("f.title like '%").append(value).append("%'");
-            } else if (key.equals("director")) {
-                buildQuery.append("d.name like '%").append(value).append("%'");
-            } else if (key.equals("minDuration")) {
-                buildQuery.append("f.runtime >= ").append(value);
-            } else if (key.equals("maxDuration")) {
-                buildQuery.append("f.runtime <= ").append(value);
-            } else if (key.equals("rating")) {
-                buildQuery.append("f.imdbRating >= ").append(value);
+            switch (key) {
+                case "title" -> buildQuery.append("f.title like '%").append(value).append("%'");
+                case "director" -> buildQuery.append("d.name like '%").append(value).append("%'");
+                case "minDuration" -> buildQuery.append("f.runtime >= ").append(value);
+                case "maxDuration" -> buildQuery.append("f.runtime <= ").append(value);
+                case "rating" -> buildQuery.append("f.imdbRating >= ").append(value);
             }
             if (iterator.hasNext()) {
                 buildQuery.append(" and ");
