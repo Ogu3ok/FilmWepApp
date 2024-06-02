@@ -1,0 +1,89 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 15px; /* Add space between cells */
+}
+
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    vertical-align: top;
+    text-align: center;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for better visibility */
+}
+
+.navigation-buttons {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.navigation-buttons button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.navigation-buttons button:hover {
+    background-color: #0056b3;
+}
+
+.film-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff; /* Add background color */
+    padding: 20px;
+}
+
+.main-info {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.poster {
+    margin-right: 20px;
+}
+
+.poster img {
+    width: 150px; /* Increase the width of the poster */
+    height: auto;
+    border-radius: 10px; /* Rounded corners for the poster */
+}
+
+.film-details {
+    text-align: left;
+}
+
+.additional-info {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.film-link {
+    margin-top: 10px;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
